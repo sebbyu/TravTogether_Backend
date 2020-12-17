@@ -11,7 +11,8 @@ class Question(models.Model):
     return f'{self.id} - {self.question}'
     
   def save(self, *args, **kwargs):
-    self.slug = slugify(self.question)
+    if not self.slug:
+      self.slug = slugify(self.question)
     super(Question, self).save(*args, **kwargs)
 
 

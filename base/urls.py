@@ -12,6 +12,7 @@ urlpatterns = [
   path('locations/<slug:slug>/', location_views.LocationDetail.as_view(), name='location-detail'),
 
   path('questions/', qanda_views.QuestionList.as_view(), name='question-list'),
+  # path('questions/', qanda_views.questionList, name='question-list'),
   path('questions/<slug:slug>/', qanda_views.QuestionDetail.as_view(), name='question-detail'),
   path('answers/', qanda_views.AnswerList.as_view(), name='answer-list'),
   path('answers/<int:pk>/', qanda_views.AnswerDetail.as_view(), name='answer-detail'),
