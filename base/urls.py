@@ -3,6 +3,11 @@ from . import views as base_views
 from qanda import views as qanda_views
 from user import views as user_views
 from location import views as location_views
+from django.conf.urls.static import static
+from django.conf import settings
+
+
+
 
 urlpatterns = [
   path('', base_views.api_root),
@@ -19,3 +24,5 @@ urlpatterns = [
 
   path('authentication/', user_views.authentication)
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
