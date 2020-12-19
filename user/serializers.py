@@ -9,10 +9,14 @@ class UserSerializer(serializers.ModelSerializer):
   # location = serializers.HyperlinkedRelatedField(
   #     view_name='location-detail', read_only=True, lookup_field='slug',
   #   )
+  # profile_picture = serializers.ImageField(
+  #   allow_empty_file=False,
+  #   use_url=False,
+  # )
 
   class Meta:
     model = User
-    fields = ('email', 'slug', 'nickname', 'gender', 'race', 'age', 'location',)
+    fields = ('email', 'slug', 'profile_picture', 'nickname', 'gender', 'race', 'age', 'location',)
 
   def to_representation(self, instance):
     response = super().to_representation(instance)
@@ -23,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
   def return_representation(self, response):
     result = {'email': response['email'],
               'slug': response['slug'],
+              'profile_picture': response['profile_picture'],
               'nickname': response['nickname'],
               'gender': response['gender'],
               'race': response['race'],
