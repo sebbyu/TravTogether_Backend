@@ -42,11 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'location_field.apps.DefaultConfig',
 
     'qanda',
     'user',
-    'location',
 ]
 
 MIDDLEWARE = [

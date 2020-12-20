@@ -4,7 +4,28 @@ from django.utils.text import slugify
 import os
 import shutil
 from django.utils.translation import ugettext_lazy as _
-from location.models import Location
+# from location.models import Location
+from django.conf import settings
+import csv
+import os
+
+
+def get_locations(filename):
+  places = []
+  with open(filename, encoding='utf8') as csvfile:
+    reader = csv.reader(csvfile)
+    next(reader)
+    for row in reader:
+      place = ""
+      if row[6] in ['CHN', 'USA', 'RUS']:
+        place = f'{row[0]}, {row[4]}, {row[1]}'
+      else:
+        place = f'{row[0]}, {row[1]}'
+      places.append((place, place))
+    return tuple(places)
+
+LOCATIONS = get_locations(os.path.abspath(os.path.join(settings.STATIC_ROOT,
+      'locations/worldcities.csv')))
 
 
 GENDER = (
@@ -69,7 +90,8 @@ class User(AbstractBaseUser):
   age = models.CharField(_("age"), max_length=50, choices=AGE_RANGE, blank=True)
   race = models.CharField(_("race"), max_length=50, choices=RACE, blank=True)
   bio = models.TextField(_("bio"), blank=True)
-  location = models.ForeignKey(Location, related_name='users', on_delete=models.PROTECT, null=True, blank=True)
+  # location = models.ForeignKey(Location, related_name='users', on_delete=models.PROTECT, null=True, blank=True)
+  location = models.CharField(_("location"), max_length=250, choices=LOCATIONS, blank=True)
   is_admin = models.BooleanField(_("is_admin"), default=False)
   is_staff = models.BooleanField(_("is_staff"),default=False)
   is_active = models.BooleanField(_("is_active"),default=True)
