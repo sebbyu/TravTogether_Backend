@@ -19,13 +19,14 @@ class UserAdmin(BaseUserAdmin):
 
   fieldsets = (
     (None, {'fields': ('email', 'password')}),
-    ("Personal Info", {'fields': ('nickname', 'profile_picture', 'gender', 'age', 'race', 'location')}),
+    ("Personal Info", {'fields': ('nickname', 'profile_picture', 'gender', 'age', 'race', 'location', 'bio',)}),
     ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_active')}),
   )
 
   add_fieldsets = (
     (None, {'classes': ('wide',),
-    'fields': ('email', 'nickname', 'profile_picture', 'gender', 'age', 'race', 'location', 'password1', 'password2',)}),
+    'fields': ('email', 'nickname', 'profile_picture', 'gender', 
+    'age', 'race', 'location', 'bio', 'password1', 'password2',)}),
   )
 
 

@@ -16,7 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = User
-    fields = ('email', 'slug', 'profile_picture', 'nickname', 'gender', 'race', 'age', 'location',)
+    fields = ('email', 'slug', 'profile_picture', 'nickname', 'gender', 
+    'race', 'age', 'location','bio')
 
   def to_representation(self, instance):
     response = super().to_representation(instance)
@@ -32,5 +33,6 @@ class UserSerializer(serializers.ModelSerializer):
               'gender': response['gender'],
               'race': response['race'],
               'age': response['age'],
-              'location': response['location']['place']}
+              'location': response['location']['place'],
+              'bio': response['bio']}
     return result
