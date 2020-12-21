@@ -24,7 +24,7 @@ def get_locations(filename):
       places.append((place, place))
     return tuple(places)
 
-LOCATIONS = get_locations(os.path.abspath(os.path.join(settings.STATIC_ROOT,
+LOCATIONS = get_locations(os.path.abspath(os.path.join(settings.MEDIA_ROOT,
       'locations/worldcities.csv')))
 
 
