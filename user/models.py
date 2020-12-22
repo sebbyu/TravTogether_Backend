@@ -21,7 +21,7 @@ def get_locations(filename):
         place = f'{row[0]}, {row[4]}, {row[1]}'
       else:
         place = f'{row[0]}, {row[1]}'
-      places.append((place, place))
+      places.append((f'{row[0]}, {row[4]}, {row[1]}', place))
     return tuple(places)
 
 LOCATIONS = get_locations(os.path.abspath(os.path.join(settings.MEDIA_ROOT,
@@ -33,7 +33,7 @@ GENDER = (
 	('Female', 'Female'),
 )
 
-RACE = (
+ETHNICITY = (
 	('American Indian / Alaska Native', 'American Indian / Alaska Native'),
 	('Asian', 'Asian'),
 	('Black / African American', 'Black / African American'),
@@ -83,12 +83,12 @@ class UserManager(BaseUserManager):
   
 class User(AbstractBaseUser):
   email = models.EmailField(_("email"), max_length=254, unique=True)
-  slug = models.SlugField(_("slug"), unique=True)
+  slug = models.SlugField(_("slug"), unique=True, blank=True)
   nickname = models.CharField(_("nickname"), max_length=50, unique=True, blank=True)
-  profile_picture = models.ImageField(_("profile_picture"), upload_to=upload_to, blank=True)
+  profilePicture = models.ImageField(_("profilePicture"), upload_to=upload_to, blank=True)
   gender = models.CharField(_("gender"), max_length=10, choices=GENDER, blank=True)
   age = models.CharField(_("age"), max_length=50, choices=AGE_RANGE, blank=True)
-  race = models.CharField(_("race"), max_length=50, choices=RACE, blank=True)
+  ethnicity = models.CharField(_("ethnicity"), max_length=50, choices=ETHNICITY, blank=True)
   bio = models.TextField(_("bio"), blank=True)
   # location = models.ForeignKey(Location, related_name='users', on_delete=models.PROTECT, null=True, blank=True)
   location = models.CharField(_("location"), max_length=250, choices=LOCATIONS, blank=True)
@@ -114,7 +114,7 @@ class User(AbstractBaseUser):
     super(User, self).save(*args, **kwargs)
 
   def delete(self, *args, **kwargs):
-    if self.profile_picture:
+    if self.profilePicture:
       dir_path = os.path.abspath(os.path.join(self.profile_picture.path, '..'))
       shutil.rmtree(dir_path)
     super(User, self).delete(*args, **kwargs)
