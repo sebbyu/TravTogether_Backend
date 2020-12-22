@@ -25,7 +25,7 @@ def get_locations(filename):
     return tuple(places)
 
 LOCATIONS = get_locations(os.path.abspath(os.path.join(settings.MEDIA_ROOT,
-      'locations/worldcities.csv')))
+      'locations/world-cities.csv')))
 
 
 GENDER = (
