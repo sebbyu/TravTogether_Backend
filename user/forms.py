@@ -4,10 +4,11 @@ from django import forms
 
 User = get_user_model()
 class CustomCreationForm(UserCreationForm):
+
   class Meta:
     model = User
     fields = ('email', 'nickname', 'profilePicture', 'gender', 'age', 'ethnicity', 'password1', 'password2',)
-
+  
 class CustomChangeForm(UserChangeForm):
   class Meta:
     model = User

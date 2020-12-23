@@ -53,7 +53,6 @@ AGE_RANGE = (
 )
 
 
-
 def upload_to(instance, filename):
 	dir_name = instance.slug
 	return f'profile_images/{dir_name}/{filename}'
@@ -80,12 +79,16 @@ class UserManager(BaseUserManager):
     )
     return superuser
 
+# class Image(models.Model):
+#   profilePicture = models.ImageField(_("profilePicture"), upload_to=upload_to, blank=True)
+
   
 class User(AbstractBaseUser):
   email = models.EmailField(_("email"), max_length=254, unique=True)
   slug = models.SlugField(_("slug"), unique=True, blank=True)
   nickname = models.CharField(_("nickname"), max_length=50, unique=True, blank=True)
   profilePicture = models.ImageField(_("profilePicture"), upload_to=upload_to, blank=True)
+  # profilePicture = models.OneToOneField(Image, on_delete=models.CASCADE, primary_key=True, blank=True)
   gender = models.CharField(_("gender"), max_length=10, choices=GENDER, blank=True)
   age = models.CharField(_("age"), max_length=50, choices=AGE_RANGE, blank=True)
   ethnicity = models.CharField(_("ethnicity"), max_length=50, choices=ETHNICITY, blank=True)

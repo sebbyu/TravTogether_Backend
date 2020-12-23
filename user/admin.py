@@ -8,7 +8,7 @@ User = get_user_model()
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
 
-  add_form = UserRegistrationForm
+  add_form = CustomCreationForm
   form = CustomChangeForm
 
   list_display = ('email', 'nickname',)

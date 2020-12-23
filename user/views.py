@@ -32,14 +32,13 @@ def userList(request):
 			password = form.cleaned_data.get('password')
 			user = form.save(commit=False)
 			user.set_password(password)
-			# user.profilePicture = profilePicture
 			serializer = UserSerializer(data=model_to_dict(user))
 			if serializer.is_valid():
-				serializer.save()
+				serializer.save(profilePicture=request.data.get('profilePicture'))
 				user = User.objects.get(email=email)
 				user.set_password(password)
 				user.save()
-				return Response(serializer.data, status=status.HTTP_201_CREATED)
+				return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 		return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -69,3 +68,4 @@ def authentication(request):
 			return HttpResponse(status=404)
 	else:
 		return HttpResponse(status=400)
+

@@ -6,12 +6,10 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
-
-
 urlpatterns = [
   path('', base_views.api_root),
-  path('users/', user_views.userList, name='user-list'),
-  # path('users/', user_views.UserList.as_view(), name='user-list'),
+  # path('users/', user_views.userList, name='user-list'),
+  path('users/', user_views.UserList.as_view(), name='user-list'),
   path('users/<slug:slug>/', user_views.UserDetail.as_view(), name='user-detail'),
   path('questions/', qanda_views.QuestionList.as_view(), name='question-list'),
   path('questions/<slug:slug>/', qanda_views.QuestionDetail.as_view(), name='question-detail'),
