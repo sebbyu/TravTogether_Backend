@@ -59,6 +59,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 def authentication(request):
 	if request.method == 'POST':
 		email = request.POST.get('email')
+		print(email)
 		password = request.POST.get('password')
 		user = authenticate(request, email=email, password=password)
 		if user is not None:
