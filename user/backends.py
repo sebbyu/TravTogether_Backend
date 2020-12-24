@@ -5,7 +5,7 @@ User = get_user_model()
 
 
 class UserAuthBackend(BaseBackend):
-  def authenticate(self, request, username=None, password=None, **kwargs):
+  def authenticate(self, request, **kwargs):
     email = kwargs['email']
     password = kwargs['password']
     try:
