@@ -31,7 +31,8 @@ class UserSerializer(serializers.ModelSerializer):
     instance.age = validated_data.get('age', instance.age)
     instance.location = validated_data.get('location', instance.location)
     instance.bio = validated_data.get('bio', instance.bio)
-    instance.set_password(password)
+    if password != None:
+      instance.set_password(password)
     instance.save()
     return instance
 
