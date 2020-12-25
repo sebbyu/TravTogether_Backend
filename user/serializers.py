@@ -5,15 +5,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
 
-  # profilePicture = serializers.ImageField(
-  #   use_url=True,
-  # )
-
-  class Meta:
-    model = User
-    fields = ('email', 'slug', 'profilePicture', 'nickname', 'gender', 
-    'ethnicity', 'age', 'location','bio','password')
-
   def create(self, validated_data):
     user = User(
       **validated_data,
@@ -23,22 +14,26 @@ class UserSerializer(serializers.ModelSerializer):
     return user
 
   def update(self, instance, validated_data):
-    password = validated_data.pop('password')
     instance.email = validated_data.get('email', instance.email)
     instance.nickname = validated_data.get('nickname', instance.nickname)
     instance.gender = validated_data.get('gender', instance.gender)
-    instance.ethnicity = validated_data.get('ethnicity', instance.ethnicity)
     instance.age = validated_data.get('age', instance.age)
+    instance.ethnicity = validated_data.get('ethnicity', instance.ethnicity)
     instance.location = validated_data.get('location', instance.location)
     instance.bio = validated_data.get('bio', instance.bio)
-    if password != None:
+    password = validated_data.pop('password')
+    if password != instance.password:
       instance.set_password(password)
     instance.save()
     return instance
 
-  # instance.email = validated_data.get('email', instance.email)
-  #       instance.content = validated_data.get('content', instance.content)
-  #       instance.created = validated_data.get('created', instance.created)
+  class Meta:
+    model = User
+    # fields = ('email', 'slug', 'profilePicture', 'nickname', 'gender', 
+    # 'ethnicity', 'age', 'location', 'bio', 'password',)
+    fields = '__all__'
+
+  
 
 
   # def to_representation(self, instance):

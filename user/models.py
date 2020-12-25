@@ -79,10 +79,6 @@ class UserManager(BaseUserManager):
     )
     return superuser
 
-# class Image(models.Model):
-#   profilePicture = models.ImageField(_("profilePicture"), upload_to=upload_to, blank=True)
-
-  
 class User(AbstractBaseUser):
   email = models.EmailField(_("email"), max_length=254, unique=True)
   slug = models.SlugField(_("slug"), unique=True, blank=True)
