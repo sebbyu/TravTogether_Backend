@@ -1,5 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from django.conf import settings
+import socket
+import urllib
+
 
 
 User = get_user_model()
@@ -9,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     user = User(
       **validated_data,
     )
+    user.is_active = True
     user.set_password(validated_data['password'])
     user.save()
     return user
@@ -29,12 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = User
-    # fields = ('email', 'slug', 'profilePicture', 'nickname', 'gender', 
-    # 'ethnicity', 'age', 'location', 'bio', 'password',)
     fields = '__all__'
-
-  
-
 
   # def to_representation(self, instance):
   #   response = super().to_representation(instance)

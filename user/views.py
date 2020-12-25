@@ -13,34 +13,6 @@ from django.forms.models import model_to_dict
 # from .permissions import IsOwnerOrReadOnly
 
 User = get_user_model()
-@api_view(['GET', 'POST'])
-def userList(request):
-	if request.method == "GET":
-		users = User.objects.all()
-		serializer = UserSerializer(users, many=True)
-		return Response(serializer.data, status=status.HTTP_200_OK)
-	elif request.method == 'POST':
-		form = UserRegistrationForm(request.POST, request.FILES)
-		if form.is_valid():
-			email = form.cleaned_data.get('email')
-			nickname = form.cleaned_data.get('nickname')
-			profilePicture = form.cleaned_data.get('profilePicture')
-			gender = form.cleaned_data.get('gender')
-			age = form.cleaned_data.get('age')
-			ethnicity = form.cleaned_data.get('ethnicity')
-			location = form.cleaned_data.get('location')
-			password = form.cleaned_data.get('password')
-			user = form.save(commit=False)
-			user.set_password(password)
-			serializer = UserSerializer(data=model_to_dict(user))
-			if serializer.is_valid():
-				serializer.save(profilePicture=request.data.get('profilePicture'))
-				user = User.objects.get(email=email)
-				user.set_password(password)
-				user.save()
-				return Response(data=serializer.data, status=status.HTTP_201_CREATED)
-			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-		return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserList(generics.ListCreateAPIView):
@@ -48,12 +20,14 @@ class UserList(generics.ListCreateAPIView):
 	serializer_class = UserSerializer
 	# permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	lookup_field = 'slug'
 	# permission_classes = [permissions.IsAuthenticatedOrReadOnly,
 	# IsOwnerOrReadOnly]
+
 
 @csrf_exempt
 def authentication(request):
