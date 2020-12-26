@@ -114,7 +114,7 @@ class User(AbstractBaseUser):
 
   def delete(self, *args, **kwargs):
     if self.profilePicture:
-      dir_path = os.path.abspath(os.path.join(self.profile_picture.path, '..'))
+      dir_path = os.path.abspath(os.path.join(self.profilePicture.path, '..'))
       shutil.rmtree(dir_path)
     super(User, self).delete(*args, **kwargs)
 
