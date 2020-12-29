@@ -91,6 +91,7 @@ class User(AbstractBaseUser):
   bio = models.TextField(_("bio"), blank=True)
   # location = models.ForeignKey(Location, related_name='users', on_delete=models.PROTECT, null=True, blank=True)
   location = models.CharField(_("location"), max_length=250, choices=LOCATIONS, blank=True)
+  fromFirebase = models.BooleanField(_("fromFirebase"), default=False)
   is_admin = models.BooleanField(_("is_admin"), default=False)
   is_staff = models.BooleanField(_("is_staff"),default=False)
   is_active = models.BooleanField(_("is_active"),default=True)
