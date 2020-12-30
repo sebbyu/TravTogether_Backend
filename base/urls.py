@@ -16,6 +16,7 @@ urlpatterns = [
   path('answers/<int:pk>/', qanda_views.AnswerDetail.as_view(), name='answer-detail'),
 
   path('authentication/', user_views.authentication),
+  path('sendmessage/', user_views.sendMessage),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

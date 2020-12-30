@@ -6,11 +6,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .forms import CustomCreationForm, UserRegistrationForm
 from django.forms.models import model_to_dict
 # from rest_framework import permissions
 # from .permissions import IsOwnerOrReadOnly
+from django.core.mail import BadHeaderError, send_mail
+import os
+from dotenv import load_dotenv
+load_dotenv(verbose=True)
 
 User = get_user_model()
 
@@ -43,3 +47,21 @@ def authentication(request):
 	else:
 		return HttpResponse(status=400)
 
+
+@csrf_exempt
+def sendMessage(request):
+	if request.method == "POST":
+		subject = request.POST.get('subject', "")
+		message = request.POST.get('message', "")
+		fromEmail = request.POST.get('fromEmail', "")
+		nl = '\n'
+		message = f"From:{nl}{fromEmail}{nl}{message}"
+		if subject and message and fromEmail:
+			try:
+				send_mail(subject, message, fromEmail, ['ystephen0522@gmail.com'])
+				return HttpResponse(status=200)
+			except BadHeaderError:
+				return HttpResponse("Invalid header found")
+			return HttpResponseRedirect('/contact/thanks/')
+		else:
+			return HttpResponse("Make sure all fields are entered and valid")
