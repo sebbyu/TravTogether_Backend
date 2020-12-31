@@ -17,6 +17,7 @@ urlpatterns = [
 
   path('authentication/', user_views.authentication),
   path('sendmessage/', user_views.sendMessage),
+  path('sendemail/', user_views.sendEmail),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

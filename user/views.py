@@ -52,14 +52,16 @@ def authentication(request):
 @csrf_exempt
 def sendMessage(request):
 	if request.method == "POST":
+		name = request.POST.get('name', "")
 		subject = request.POST.get('subject', "")
 		message = request.POST.get('message', "")
-		fromEmail = request.POST.get('fromEmail', "")
+		sendFrom = request.POST.get('sendFrom', "")
+		tl = '\t'
 		nl = '\n'
-		message = f"From:{nl}{fromEmail}{nl}{message}"
-		if subject and message and fromEmail:
+		message = f"From:{nl}{tl}{name}: {sendFrom}{nl}{nl}{message}"
+		if subject and message and sendFrom:
 			try:
-				send_mail(subject, message, fromEmail, ['ystephen0522@gmail.com'])
+				send_mail(subject, message, sendFrom, [os.getenv("EMAIL_HOST_USER")])
 				return HttpResponse(status=200)
 			except BadHeaderError:
 				return HttpResponse("Invalid header found")
@@ -67,13 +69,19 @@ def sendMessage(request):
 		else:
 			return HttpResponse("Make sure all fields are entered and valid")
 
+
 @csrf_exempt
 def sendEmail(request):
 	if request.method == "POST":
+		name = request.POST.get('name', "")
 		sendFrom = request.POST.get("sendFrom", "")
 		sendTo = request.POST.get("sendTo", "")
 		subject = request.POST.get("subject", "")
 		message = request.POST.get("message", "")
+
+		nl = '\n'
+		tl = '\t'
+		message = f"From:{nl}{tl}{name}: {sendFrom}{nl}{nl}{message}"
 
 		msg = EmailMessage()
 		msg.set_content(message)
@@ -83,6 +91,6 @@ def sendEmail(request):
 
 		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 		server.login(os.getenv("EMAIL_HOST_USER"), os.getenv("EMAIL_HOST_PASSWORD"))
-		server.send_message()
+		server.send_message(msg)
 		server.quit()
 		return HttpResponse(status=200)
