@@ -12,12 +12,13 @@ from django.forms.models import model_to_dict
 # from rest_framework import permissions
 # from .permissions import IsOwnerOrReadOnly
 from django.core.mail import BadHeaderError, send_mail
+import smtplib
+from email.message import EmailMessage
 import os
 from dotenv import load_dotenv
 load_dotenv(verbose=True)
 
 User = get_user_model()
-
 
 class UserList(generics.ListCreateAPIView):
 	queryset = User.objects.all()
@@ -65,3 +66,23 @@ def sendMessage(request):
 			return HttpResponseRedirect('/contact/thanks/')
 		else:
 			return HttpResponse("Make sure all fields are entered and valid")
+
+@csrf_exempt
+def sendEmail(request):
+	if request.method == "POST":
+		sendFrom = request.POST.get("sendFrom", "")
+		sendTo = request.POST.get("sendTo", "")
+		subject = request.POST.get("subject", "")
+		message = request.POST.get("message", "")
+
+		msg = EmailMessage()
+		msg.set_content(message)
+		msg['Subject'] = subject
+		msg['From'] = sendFrom
+		msg['To'] = sendTo
+
+		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+		server.login(os.getenv("EMAIL_HOST_USER"), os.getenv("EMAIL_HOST_PASSWORD"))
+		server.send_message()
+		server.quit()
+		return HttpResponse(status=200)
