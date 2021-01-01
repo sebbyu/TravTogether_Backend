@@ -18,6 +18,9 @@ urlpatterns = [
   path('authentication/', user_views.authentication),
   path('sendmessage/', user_views.sendMessage),
   path('sendemail/', user_views.sendEmail),
+  path("chats/", user_views.ChatList.as_view(), name="chat-list"),
+  path("chats/<slug:slug>/", user_views.ChatDetail.as_view(), name="chat-detail"),
+  
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

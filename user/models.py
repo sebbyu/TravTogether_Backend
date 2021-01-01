@@ -124,3 +124,30 @@ class User(AbstractBaseUser):
 
   def has_module_perms(self, app_label):
     return self.is_admin
+
+
+class Chat(models.Model):
+  title = models.CharField(_("title"), max_length=50, default="Chatroom")
+  slug = models.SlugField(_("slug"), unique=True)
+  created = models.DateTimeField(_("created"), auto_now_add=True)
+  users = models.ManyToManyField(User, related_name="chats")
+
+  class Meta:
+    ordering = ['-created',]
+
+  def __str__(self):
+    return f'{self.title}'
+
+class Message(models.Model):
+  text = models.CharField(_("text"), max_length=250)
+  created = models.DateTimeField(_("created"), auto_now=True)
+  chat = models.ForeignKey(Chat, related_name="messages", on_delete=models.CASCADE)
+
+  class Meta:
+    ordering = ['-created']
+
+  def __str__(self):
+    return f'{self.text}'
+
+
+

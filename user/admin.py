@@ -3,6 +3,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.admin import Group
 from django.contrib.auth import get_user_model
 from .forms import CustomChangeForm, CustomCreationForm, UserRegistrationForm
+from .models import Chat, Message
+
 User = get_user_model()
 
 @admin.register(User)
@@ -31,3 +33,11 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.unregister(Group)
+
+@admin.register(Chat)
+class ChatAdmin(admin.ModelAdmin):
+  pass
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+  pass
