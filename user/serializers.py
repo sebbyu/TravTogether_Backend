@@ -2,7 +2,6 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.conf import settings
 import os
-from .models import Chat, Message
 
 
 User = get_user_model()
@@ -59,11 +58,3 @@ class UserSerializer(serializers.ModelSerializer):
   #             'location': response['location']['place'],
   #             'bio': response['bio']}
   #   return result
-
-class ChatSerializer(serializers.ModelSerializer):
-  users = UserSerializer
-  messages = serializers.StringRelatedField(many=True)
-
-  class Meta:
-    model = Chat
-    fields = ["id", "title", "created", "users", "messages",]

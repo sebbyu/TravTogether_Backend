@@ -16,14 +16,7 @@ import smtplib
 from email.message import EmailMessage
 import os
 from dotenv import load_dotenv
-from .models import Chat, Message
-from .serializers import ChatSerializer
-
-
-
-
 load_dotenv(verbose=True)
-
 User = get_user_model()
 
 class UserList(generics.ListCreateAPIView):
@@ -100,12 +93,3 @@ def sendEmail(request):
 		server.send_message(msg)
 		server.quit()
 		return HttpResponse(status=200)
-
-
-class ChatList(generics.ListCreateAPIView):
-	queryset = Chat.objects.all()
-	serializer_class = ChatSerializer
-
-class ChatDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Chat.objects.all()
-	serializer_class = ChatSerializer
