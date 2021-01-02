@@ -24,6 +24,7 @@ urlpatterns = [
   path("chats/<int:pk>/", chat_views.ChatDetail.as_view(), name="chat-detail"),
   path("messages/", chat_views.MessageList.as_view(), name="message-list"),
   path("messages/<int:pk>/", chat_views.MessageDetail.as_view(), name="message-detail"),
+  path("chats/<str:user.nickname>/", chat_views.chatListByUser),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
