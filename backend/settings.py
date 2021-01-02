@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'qanda',
     'user',
+    'chat',
 ]
 
 MIDDLEWARE = [
