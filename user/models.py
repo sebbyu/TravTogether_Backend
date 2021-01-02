@@ -4,7 +4,6 @@ from django.utils.text import slugify
 import os
 import shutil
 from django.utils.translation import ugettext_lazy as _
-# from location.models import Location
 from django.conf import settings
 import csv
 import os
@@ -84,12 +83,10 @@ class User(AbstractBaseUser):
   slug = models.SlugField(_("slug"), unique=True, blank=True)
   nickname = models.CharField(_("nickname"), max_length=50, unique=True, blank=True)
   profilePicture = models.ImageField(_("profilePicture"), upload_to=upload_to, blank=True)
-  # profilePicture = models.OneToOneField(Image, on_delete=models.CASCADE, primary_key=True, blank=True)
   gender = models.CharField(_("gender"), max_length=10, choices=GENDER, blank=True)
   age = models.CharField(_("age"), max_length=50, choices=AGE_RANGE, blank=True)
   ethnicity = models.CharField(_("ethnicity"), max_length=50, choices=ETHNICITY, blank=True)
   bio = models.TextField(_("bio"), blank=True)
-  # location = models.ForeignKey(Location, related_name='users', on_delete=models.PROTECT, null=True, blank=True)
   location = models.CharField(_("location"), max_length=250, choices=LOCATIONS, blank=True)
   fromFirebase = models.BooleanField(_("fromFirebase"), default=False)
   is_admin = models.BooleanField(_("is_admin"), default=False)

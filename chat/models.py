@@ -19,7 +19,7 @@ class Message(models.Model):
   text = models.CharField(_("text"), max_length=250)
   created = models.DateTimeField(_("created"), auto_now_add=True)
   chat = models.ForeignKey(Chat, related_name="messages", on_delete=models.CASCADE)
-  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+  user = models.ForeignKey(User, related_name="userMessages", on_delete=models.CASCADE)
 
   class Meta:
     ordering = ['-created',]

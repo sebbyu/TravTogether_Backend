@@ -9,4 +9,4 @@ class ChatAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-  list_display = ('text', 'user', 'created',)
+  list_display = ('text', 'created', "chat_id", "user_id",)

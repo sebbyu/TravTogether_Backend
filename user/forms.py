@@ -28,4 +28,3 @@ class UserRegistrationForm(forms.ModelForm):
   class Meta:
     model = User
     fields = ['email', 'nickname', 'profilePicture', 'gender', 'age', 'ethnicity', 'password',]
-    # fields = ['email', 'nickname', 'gender', 'age', 'ethnicity', 'location', 'password',]
