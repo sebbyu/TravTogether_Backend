@@ -10,7 +10,7 @@ class Chat(models.Model):
   created = models.DateTimeField(_("created"), auto_now_add=True)
 
   class Meta:
-    ordering = ['-created',]
+    ordering = ['title',]
   
   def __str__(self):
     return f"{self.title} - {self.created.now()}"
@@ -22,7 +22,7 @@ class Message(models.Model):
   user = models.ForeignKey(User, related_name="userMessages", on_delete=models.CASCADE)
 
   class Meta:
-    ordering = ['-created',]
+    ordering = ['created',]
   
   def __str__(self):
     return f"{self.user}: {self.text} - {self.created.now()}"
