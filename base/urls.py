@@ -22,7 +22,8 @@ urlpatterns = [
 
   path('chats/', chat_views.ChatList.as_view(), name="chat-list"),
   path("chats/<int:pk>/", chat_views.ChatDetail.as_view(), name="chat-detail"),
-  path("messages/", chat_views.MessageList.as_view(), name="message-list"),
+  # path("messages2/", chat_views.MessageList.as_view(), name="message-list"),
+  path("messages/", chat_views.messageList, name="message-list"),
   path("messages/<int:pk>/", chat_views.MessageDetail.as_view(), name="message-detail"),
 ]
 

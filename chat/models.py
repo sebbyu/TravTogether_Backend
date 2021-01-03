@@ -25,4 +25,4 @@ class Message(models.Model):
     ordering = ['created',]
   
   def __str__(self):
-    return f"{self.user}: {self.text} - {self.created.now()}"
+    return f"{self.user}: {self.text}"

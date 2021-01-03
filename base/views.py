@@ -10,5 +10,6 @@ def api_root(request, format=None):
     'Questions': reverse('question-list', request=request, format=format),
     'Answers': reverse('answer-list', request=request, format=format),
     "Chats": reverse('chat-list', request=request, format=format),
+    "Messages": reverse('message-list', request=request, format=format),
   })
     
