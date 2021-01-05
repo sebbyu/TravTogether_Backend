@@ -9,6 +9,9 @@ from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from .forms import MessageForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseForbidden
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -53,3 +56,14 @@ def messageList(request):
       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     print(form.errors)
     return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+def chat_room(request, chat_id):
+  try:
+    chat = get_object_or_404(Chat, pk=chat_id)
+  except:
+    return HttpResponse(status=404)
+  return HttpResponse(chat, status=200)

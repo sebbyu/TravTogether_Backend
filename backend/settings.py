@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # ===========
     'rest_framework',
     'corsheaders',
+    'channels',
     # ===========
     'qanda',
     'user',
@@ -80,7 +81,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+# WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = "backend.routing.application"
 
 
 # Database
