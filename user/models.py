@@ -117,7 +117,7 @@ class User(AbstractBaseUser):
     super(User, self).delete(*args, **kwargs)
 
   def has_perm(self, perm, obj=None):
-    return self.is_admin
+    return self.is_active
 
   def has_module_perms(self, app_label):
     return self.is_admin

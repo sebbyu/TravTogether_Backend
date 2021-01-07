@@ -5,7 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate as myAuthenticate
+from django.contrib.auth import login as myLogin
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import CustomCreationForm, UserRegistrationForm
 from django.forms.models import model_to_dict
@@ -38,9 +39,10 @@ def authentication(request):
 	if request.method == 'POST':
 		email = request.POST.get('email')
 		password = request.POST.get('password')
-		user = authenticate(request, email=email, password=password)
+		user = myAuthenticate(request, email=email, password=password)
+		print(user)
 		if user is not None:
-			login(request, user)
+			myLogin(request, user)
 			return HttpResponse(status=200)
 		else:
 			return HttpResponse(status=404)
