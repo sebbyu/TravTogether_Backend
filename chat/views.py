@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
-from .forms import MessageForm
+from .forms import MessageForm, ChatForm, AddChatUserForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseForbidden
@@ -57,13 +57,51 @@ def messageList(request):
     print(form.errors)
     return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
-
 def chat_room(request, chat_id):
   try:
     chat = get_object_or_404(Chat, pk=chat_id)
   except:
     return HttpResponse(status=404)
   return HttpResponse(chat, status=200)
+
+@csrf_exempt
+@api_view(['GET', 'POST'])
+def chatList(request):
+  if request.method == "GET":
+    chats = Chat.objects.all()
+    serializer = ChatSerializer(chats, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  elif request.method == "POST":
+    form = ChatForm(request.POST)
+    if form.is_valid():
+      title = form.cleaned_data['title']
+      userNickname = form.cleaned_data['user']
+      user = User.objects.get(nickname=userNickname)
+      print(user)
+      chat = Chat(title=title)
+      print(chat)
+      chat.save()
+      chat.users.add(user)
+      return HttpResponse(chat, status=201)
+    return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+@api_view(['GET', 'PUT', 'DELETE'])
+def chatDetail(request, chat_id):
+  chat = Chat.objects.get(id=chat_id)
+  if request.method == "GET":
+    serializer = ChatSerializer(chat)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+  elif request.method == "PUT":
+    form = AddChatUserForm(request.POST)
+    if form.is_valid():
+      userNickname = form.cleaned_data['user']
+      user = User.objects.get(nickname=userNickname)
+      chat.users.add(user)
+      return HttpResponse(chat, status=200)
+    print(form.errors)
+    return HttpResponse(chat, status=201)
+  elif request.method == "DELETE":
+    chat.delete()
+    return HttpResponse(status=204)

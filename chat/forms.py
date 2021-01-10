@@ -7,3 +7,10 @@ class MessageForm(forms.Form):
   chatId = forms.IntegerField()
   userNickname = forms.CharField()
   newText = forms.CharField()
+
+class ChatForm(forms.Form):
+  title = forms.CharField()
+  user = forms.CharField()
+
+class AddChatUserForm(forms.Form):
+  user = forms.CharField()

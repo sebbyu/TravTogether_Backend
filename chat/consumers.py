@@ -26,6 +26,7 @@ class ChatConsumer(WebsocketConsumer):
       self.channel_name
     )
   def receive(self, text_data):
+    
     text_data_json = json.loads(text_data)
     userNickname, newText = text_data_json['userNickname'], text_data_json['newText']
     now = timezone.now()
@@ -38,13 +39,7 @@ class ChatConsumer(WebsocketConsumer):
         'created': now.isoformat(),
       }
     )
-    self.addToServer(newText, userNickname)
+    
 
   def chat_message(self, event):
     self.send(text_data=json.dumps(event))
-
-  def addToServer(self, newText, userNickname):
-    chat = Chat.objects.get(id=self.chat_id)
-    user = User.objects.get(nickname=userNickname)
-    message = Message(text=newText,chat=chat,user=user)
-    message.save()

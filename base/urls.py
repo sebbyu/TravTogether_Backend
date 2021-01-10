@@ -20,8 +20,10 @@ urlpatterns = [
   path('sendmessage/', user_views.sendMessage),
   path('sendemail/', user_views.sendEmail),
 
-  path('chats/', chat_views.ChatList.as_view(), name="chat-list"),
-  path("chats/<int:pk>/", chat_views.ChatDetail.as_view(), name="chat-detail"),
+  # path('chats/', chat_views.ChatList.as_view(), name="chat-list"),
+  # path("chats/<int:pk>/", chat_views.ChatDetail.as_view(), name="chat-detail"),
+  path('chats/', chat_views.chatList, name="chat-list"),
+  path('chats/<int:chat_id>/', chat_views.chatDetail, name="chat-detail"),
   # path("messages2/", chat_views.MessageList.as_view(), name="message-list"),
   path("messages/", chat_views.messageList, name="message-list"),
   path("messages/<int:pk>/", chat_views.MessageDetail.as_view(), name="message-detail"),

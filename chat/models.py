@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from django.utils.timezone import now
 User = get_user_model()
 
 
 class Chat(models.Model):
-  title = models.CharField(_("title"), max_length=50, blank=True)
+  title = models.CharField(_("title"), max_length=50, blank=True, unique=True)
   users = models.ManyToManyField(User, related_name="chats")
-  created = models.DateTimeField(_("created"), auto_now_add=True)
+  created = models.DateTimeField(_("created"), default=now)
 
   class Meta:
     ordering = ['title',]
