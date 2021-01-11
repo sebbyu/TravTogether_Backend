@@ -11,7 +11,7 @@ class Chat(models.Model):
   created = models.DateTimeField(_("created"), default=now)
 
   class Meta:
-    ordering = ['title',]
+    ordering = ['-created',]
   
   def __str__(self):
     return f"{self.title} - {self.created.now()}"

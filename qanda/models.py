@@ -8,7 +8,7 @@ class Question(models.Model):
   slug = models.SlugField(_("slug"), unique=True)
 
   def __str__(self):
-    return f'{self.id} - {self.question}'
+    return f'{self.question}'
     
   def save(self, *args, **kwargs):
     if not self.slug:
