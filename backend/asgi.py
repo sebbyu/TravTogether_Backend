@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/asgi/
 """
 
 import os
-from current_settings import CURRENT_SETTING
+from backend.current_settings import CURRENT_SETTING
 
 from django.core.asgi import get_asgi_application
 

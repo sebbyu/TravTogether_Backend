@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from current_settings import CURRENT_SETTING
+from backend.current_settings import CURRENT_SETTING
 
 
 def main():
