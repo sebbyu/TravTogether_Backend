@@ -8,7 +8,6 @@ from django.conf import settings
 import csv
 import os
 
-
 def get_locations(filename):
   places = []
   with open(filename, encoding='utf8') as csvfile:
