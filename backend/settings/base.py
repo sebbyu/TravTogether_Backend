@@ -155,9 +155,6 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = 'ystephen0522@gmail.com'
-EMAIL_HOST_PASSWORD = 
 
 
 CHANNEL_LAYERS = {
