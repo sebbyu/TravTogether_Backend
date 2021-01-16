@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from backend.current_settings import CURRENT_HOST
-import django_heroku
 load_dotenv(verbose=True)
 # project_folder = os.path.expanduser('~/backend')  # adjust as appropriate
 # load_dotenv(os.path.join(project_folder, '.env'))
@@ -167,7 +166,5 @@ CHANNEL_LAYERS = {
         }
     }
 }
-
-django_heroku.settings(locals())
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
