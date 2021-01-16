@@ -40,9 +40,15 @@ class UserSerializer(serializers.ModelSerializer):
     return instance
 
   def get_image_url(self, obj):
-    request = self.context.get("request")
-    full = request.build_absolute_uri(obj.profilePicture.url)
-    return full.split('media')[0]+"static/media"+full.split('media')[1]
+    new_url = ""
+    try:
+      request = self.context.get("request")
+      full = request.build_absolute_uri(obj.profilePicture.url)
+      new_url = full.split('media')[0]+"static/media"+full.split('media')[1]
+    except ValueError:
+      new_url = None
+    return new_url
+    
   class Meta:
     model = User
     fields = '__all__'
