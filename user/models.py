@@ -22,7 +22,7 @@ def get_locations(filename):
       places.append((f'{row[0]}, {row[4]}, {row[1]}', place))
     return tuple(places)
 
-LOCATIONS = get_locations(os.path.abspath(os.path.join(settings.MEDIA_ROOT,
+LOCATIONS = get_locations(os.path.abspath(os.path.join(settings.STATIC_ROOT,
       'locations/world-cities.csv')))
 
 
