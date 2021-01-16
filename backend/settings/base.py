@@ -138,7 +138,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "../static", "media")
 STATIC_ROOT = os.path.join(BASE_DIR, '../static')
 
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
 
 AUTHENTICATION_BACKENDS = [
@@ -162,13 +162,3 @@ CHANNEL_LAYERS = {
         }
     }
 }
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    '/var/www/static/',
-]
-
-
-
-
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
