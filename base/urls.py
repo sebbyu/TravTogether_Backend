@@ -30,5 +30,6 @@ urlpatterns = [
   path("chatroom/<int:chat_id>/", chat_views.chat_room, name="chat_room"),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

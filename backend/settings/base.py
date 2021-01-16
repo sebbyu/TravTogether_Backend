@@ -34,7 +34,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
 ALLOWED_HOSTS = [CURRENT_HOST]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,13 +54,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-
-    'django.middleware.security.SecurityMiddleware',
-    
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,7 +124,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -139,7 +134,7 @@ AUTH_USER_MODEL = 'user.User'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, '../static')
 
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -166,5 +161,13 @@ CHANNEL_LAYERS = {
         }
     }
 }
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    '/var/www/static/',
+]
+
+
+
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

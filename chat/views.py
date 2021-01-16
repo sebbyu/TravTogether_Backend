@@ -77,9 +77,7 @@ def chatList(request):
       title = form.cleaned_data['title']
       userNickname = form.cleaned_data['user']
       user = User.objects.get(nickname=userNickname)
-      print(user)
       chat = Chat(title=title)
-      print(chat)
       chat.save()
       chat.users.add(user)
       return HttpResponse(chat, status=201)

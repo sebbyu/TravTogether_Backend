@@ -6,7 +6,7 @@ User = get_user_model()
 
 
 class Chat(models.Model):
-  title = models.CharField(_("title"), max_length=50, blank=True, unique=True)
+  title = models.CharField(_("title"), max_length=50, blank=False)
   users = models.ManyToManyField(User, related_name="chats")
   created = models.DateTimeField(_("created"), default=now)
 
