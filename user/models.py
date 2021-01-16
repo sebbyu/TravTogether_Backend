@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 import csv
 import os
+from django.core.files.storage import FileSystemStorage
 
 def get_locations(filename):
   places = []
@@ -50,6 +51,7 @@ AGE_RANGE = (
 	("60+", "60+"),
 )
 
+storage = FileSystemStorage(settings.MEDIA_ROOT)
 
 def upload_to(instance, filename):
 	dir_name = instance.slug
@@ -81,7 +83,7 @@ class User(AbstractBaseUser):
   email = models.EmailField(_("email"), max_length=254, unique=True)
   slug = models.SlugField(_("slug"), unique=True, blank=True)
   nickname = models.CharField(_("nickname"), max_length=50, unique=True, blank=True)
-  profilePicture = models.ImageField(_("profilePicture"), upload_to=upload_to, blank=True)
+  profilePicture = models.ImageField(_("profilePicture"), upload_to=upload_to, blank=True, storage=storage)
   gender = models.CharField(_("gender"), max_length=10, choices=GENDER, blank=True)
   age = models.CharField(_("age"), max_length=50, choices=AGE_RANGE, blank=True)
   ethnicity = models.CharField(_("ethnicity"), max_length=50, choices=ETHNICITY, blank=True)
