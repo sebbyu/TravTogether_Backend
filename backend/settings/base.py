@@ -161,7 +161,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],
+            'hosts': [('127.0.0.1', 6379), ("https://travtogether.herokuapp.com", 6379)],
         }
     }
 }
