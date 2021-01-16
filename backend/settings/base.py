@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from backend.current_settings import CURRENT_HOST
 load_dotenv(verbose=True)
 # project_folder = os.path.expanduser('~/backend')  # adjust as appropriate
 # load_dotenv(os.path.join(project_folder, '.env'))
@@ -31,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # DEBUG = bool(os.getenv('DEBUG'))
 
 # ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
-ALLOWED_HOSTS = ['travtogether.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = [CURRENT_HOST]
 
 
 # Application definition
@@ -161,7 +162,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379), ("https://travtogether.herokuapp.com", 6379)],
+            'hosts': [(CURRENT_HOST, 6379)],
         }
     }
 }
