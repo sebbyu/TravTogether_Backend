@@ -7,7 +7,7 @@ import os
 User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
 
-  profilePicture = serializers.SerializerMethodField('get_image_url')
+  image_url = serializers.SerializerMethodField('get_image_url')
 
   def create(self, validated_data):
     user = User(
@@ -25,6 +25,9 @@ class UserSerializer(serializers.ModelSerializer):
       profilePicture = validated_data.pop('profilePicture')
       instance.profilePicture.delete()
       instance.profilePicture = profilePicture
+      image_url = validated_data.pop('profilePicture')
+      instance.image_url.delete()
+      instance.image_url = image_url
     except KeyError:
       pass
     instance.profilePicture = validated_data.get('profilePicture', instance.profilePicture)
@@ -40,14 +43,12 @@ class UserSerializer(serializers.ModelSerializer):
     return instance
 
   def get_image_url(self, obj):
-    new_url = ""
     try:
       request = self.context.get("request")
       full = request.build_absolute_uri(obj.profilePicture.url)
-      new_url = full.split('media')[0]+"static/media"+full.split('media')[1]
-    except ValueError:
-      new_url = None
-    return new_url
+      return full.split('media')[0]+"static/media"+full.split('media')[1]
+    except:
+      return None  
     
   class Meta:
     model = User
