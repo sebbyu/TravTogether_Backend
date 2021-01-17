@@ -154,11 +154,20 @@ EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
 
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [(CURRENT_HOST, 6379)],
+#         }
+#     }
+# }
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [(CURRENT_HOST, 6379)],
+            'hosts': [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         }
     }
 }
