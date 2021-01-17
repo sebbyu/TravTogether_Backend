@@ -25,4 +25,4 @@ from backend.current_settings import CURRENT_SETTING
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", CURRENT_SETTING)
 django.setup()
-application = get_default_application
+application = get_default_application()
