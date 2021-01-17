@@ -10,4 +10,4 @@ def __set__(setting):
     return production_settings, production_host
 
 
-CURRENT_SETTING, CURRENT_HOST = __set__("local")
+CURRENT_SETTING, CURRENT_HOST = __set__("production")
