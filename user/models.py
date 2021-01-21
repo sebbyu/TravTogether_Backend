@@ -8,6 +8,7 @@ from django.conf import settings
 import csv
 import os
 from django.core.files.storage import FileSystemStorage
+from django.utils.timezone import now
 
 def get_locations(filename):
   places = []
@@ -123,3 +124,9 @@ class User(AbstractBaseUser):
   def has_module_perms(self, app_label):
     return self.is_admin
 
+class Message(models.Model):
+  subject = models.CharField(_("title"), max_length=50)
+  message = models.TextField(_("message"))
+  user = models.ForeignKey(User, related_name="messages", on_delete=models.CASCADE)
+  sender = models.CharField(_("sender"), max_length=100)
+  created = models.DateTimeField(_("created"), default=now)

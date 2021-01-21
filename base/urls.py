@@ -17,9 +17,8 @@ urlpatterns = [
   path('answers/<int:pk>/', qanda_views.AnswerDetail.as_view(), name='answer-detail'),
 
   path('authentication/', user_views.authentication),
-  path('sendmessage/', user_views.sendMessage),
-  path('sendemail/', user_views.sendEmail),
-
+  path('contact/', user_views.contact),
+  path('sendMessage/', user_views.sendMessage),
   # path('chats/', chat_views.ChatList.as_view(), name="chat-list"),
   # path("chats/<int:pk>/", chat_views.ChatDetail.as_view(), name="chat-detail"),
   path('chats/', chat_views.chatList, name="chat-list"),

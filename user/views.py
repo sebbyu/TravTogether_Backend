@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
+from .models import Message
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -8,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate as myAuthenticate
 from django.contrib.auth import login as myLogin
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import CustomCreationForm, UserRegistrationForm
+from .forms import CustomCreationForm, UserRegistrationForm, MessageForm
 from django.forms.models import model_to_dict
 # from rest_framework import permissions
 # from .permissions import IsOwnerOrReadOnly
@@ -51,7 +52,7 @@ def authentication(request):
 
 
 @csrf_exempt
-def sendMessage(request):
+def contact(request):
 	if request.method == "POST":
 		name = request.POST.get('name', "")
 		subject = request.POST.get('subject', "")
@@ -70,28 +71,19 @@ def sendMessage(request):
 		else:
 			return HttpResponse("Make sure all fields are entered and valid")
 
-
 @csrf_exempt
-def sendEmail(request):
+def sendMessage(request):
 	if request.method == "POST":
-		name = request.POST.get('name', "")
-		sendFrom = request.POST.get("sendFrom", "")
-		sendTo = request.POST.get("sendTo", "")
-		subject = request.POST.get("subject", "")
-		message = request.POST.get("message", "")
-
-		nl = '\n'
-		tl = '\t'
-		message = f"From:{nl}{tl}{name}: {sendFrom}{nl}{nl}{message}"
-
-		msg = EmailMessage()
-		msg.set_content(message)
-		msg['Subject'] = subject
-		msg['From'] = sendFrom
-		msg['To'] = sendTo
-
-		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-		server.login(os.getenv("EMAIL_HOST_USER"), os.getenv("EMAIL_HOST_PASSWORD"))
-		server.send_message(msg)
-		server.quit()
-		return HttpResponse(status=200)
+		form = MessageForm(request.POST)
+		if form.is_valid():
+			sender = form.cleaned_data['sender']
+			receiver = form.cleaned_data['receiver']
+			subject = form.cleaned_data['subject']
+			message = form.cleaned_data['message']
+			receiverUser = User.objects.get(nickname=receiver)
+			new_message = Message(subject=subject, message=message, user=receiverUser,
+			sender=sender)
+			new_message.save()
+			return HttpResponse(status=201) 
+		print(form.errors)
+		return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -28,3 +28,9 @@ class UserRegistrationForm(forms.ModelForm):
   class Meta:
     model = User
     fields = ['email', 'nickname', 'profilePicture', 'gender', 'age', 'ethnicity', 'password',]
+
+class MessageForm(forms.Form):
+  sender = forms.CharField()
+  receiver = forms.CharField()
+  subject = forms.CharField()
+  message = forms.CharField(widget=forms.Textarea)

@@ -1,13 +1,24 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.forms.models import model_to_dict
 import os
 
 
 User = get_user_model()
-class UserSerializer(serializers.ModelSerializer):
 
-  image_url = serializers.SerializerMethodField('get_image_url')
+class MessageField(serializers.RelatedField):
+  def to_representation(self, value):
+    rep = dict()
+    dict_model = model_to_dict(value)
+    rep['subject'] = dict_model['subject']
+    rep['sender'] = dict_model['sender']
+    rep['message'] = dict_model['message']
+    rep['created'] = dict_model['created'].strftime("%m-%d-%Y %H:%M:%S")
+    return rep
+
+
+class UserSerializer(serializers.ModelSerializer):
 
   def create(self, validated_data):
     user = User(
@@ -42,14 +53,9 @@ class UserSerializer(serializers.ModelSerializer):
     instance.save()
     return instance
 
-  def get_image_url(self, obj):
-    try:
-      request = self.context.get("request")
-      full = request.build_absolute_uri(obj.profilePicture.url)
-      return full.split('media')[0]+"static/media"+full.split('media')[1]
-    except:
-      return None  
-    
+  # messages = serializers.RelatedField(many=True, read_only=True)
+  messages = MessageField(many=True, read_only=True)
+
   class Meta:
     model = User
     fields = '__all__'
